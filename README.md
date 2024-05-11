@@ -47,7 +47,11 @@ To ensure the quality and functionality of the application, tests are crucial. R
 This project uses Riverpod as its state management solution. [Riverpod](https://riverpod.dev/) allows for a clean separation of concerns and scalable state management, making the codebase more maintainable and testable.
 
 ## Demo
-![video](videos/demo.mov)
+![video](https://github.com/MaldonadoAndres/coffee-lover/assets/42980462/02b26d80-8b77-4a3d-acef-7b0cdc42144d)
+
+
+
+
 
 
 
