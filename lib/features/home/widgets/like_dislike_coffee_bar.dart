@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LikeDislikeCoffeBar extends ConsumerWidget {
-  const LikeDislikeCoffeBar({super.key});
+  const LikeDislikeCoffeBar({super.key, required this.onLike});
+  final Function() onLike;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,6 +44,7 @@ class LikeDislikeCoffeBar extends ConsumerWidget {
                 if (randomCoffeProvider.isRefreshing) {
                   return;
                 }
+                onLike();
                 ref.read(saveToLocalProvider.notifier).save(randomCoffeProvider.value ?? '');
                 ref.invalidate(getRandomCoffeeProvider);
               },

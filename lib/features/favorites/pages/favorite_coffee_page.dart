@@ -11,6 +11,10 @@ class FavoriteCoffeePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favoriteCoffees = ref.watch(getFavoriteCoffeesProvider);
+    final pageController = usePageController(
+      viewportFraction: 0.3,
+      initialPage: 0,
+    );
     final currentImage = useState('');
 
     return Scaffold(
@@ -61,10 +65,7 @@ class FavoriteCoffeePage extends HookConsumerWidget {
                   Expanded(
                     child: PageView.builder(
                       itemCount: data.length,
-                      controller: PageController(
-                        viewportFraction: 0.3,
-                        initialPage: 0,
-                      ),
+                      controller: pageController,
                       onPageChanged: (index) {
                         currentImage.value = data[index];
                       },
@@ -72,16 +73,27 @@ class FavoriteCoffeePage extends HookConsumerWidget {
                       itemBuilder: (context, index) {
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 8),
-                          child: CachedNetworkImage(
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                            imageUrl: data[index],
-                            imageBuilder: (context, imageProvider) => ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
+                          child: GestureDetector(
+                            onTap: () {
+                              currentImage.value = data[index];
+
+                              pageController.animateToPage(
+                                index,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            child: CachedNetworkImage(
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                              imageUrl: data[index],
+                              imageBuilder: (context, imageProvider) => ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
